@@ -12,7 +12,7 @@ const App = () => {
       id: 1,
       name: 'Mercury',
       mass: 0.06,
-      mass_unit: 'earth masses',
+      mass_unit: 'earth mass',
       radius: 2440,
       radius_unit: 'km',
       satellites: 0,
@@ -26,7 +26,7 @@ const App = () => {
       id: 2,
       name: 'Venus',
       mass: 0.82,
-      mass_unit: 'earth masses',
+      mass_unit: 'earth mass',
       radius: 6052,
       radius_unit: 'km',
       satellites: 0,
@@ -40,7 +40,7 @@ const App = () => {
       id: 3,
       name: 'Earth',
       mass: 1,
-      mass_unit: 'earth masses',
+      mass_unit: 'earth mass',
       radius: 6378,
       radius_unit: 'km',
       satellites: 1,
@@ -54,7 +54,7 @@ const App = () => {
       id: 4,
       name: 'Mars',
       mass: 0.11,
-      mass_unit: 'earth masses',
+      mass_unit: 'earth mass',
       radius: 3397,
       radius_unit: 'km',
       satellites: 2,
@@ -68,7 +68,7 @@ const App = () => {
       id: 5,
       name: 'Jupiter',
       mass: 317.8,
-      mass_unit: 'earth masses',
+      mass_unit: 'earth mass',
       radius: 71490,
       radius_unit: 'km',
       satellites: 62,
@@ -82,7 +82,7 @@ const App = () => {
       id: 6,
       name: 'Saturn',
       mass: 95.2,
-      mass_unit: 'earth masses',
+      mass_unit: 'earth mass',
       radius: 60270,
       radius_unit: 'km',
       satellites: 34,
@@ -96,7 +96,7 @@ const App = () => {
       id: 7,
       name: 'Uranus',
       mass: 14.6,
-      mass_unit: 'earth masses',
+      mass_unit: 'earth mass',
       radius: 25560,
       radius_unit: 'km',
       satellites: 27,
@@ -110,7 +110,7 @@ const App = () => {
       id: 8,
       name: 'Neptune',
       mass: 17.2,
-      mass_unit: 'earth masses',
+      mass_unit: 'earth mass',
       radius: 24760,
       radius_unit: 'km',
       satellites: 13,
@@ -120,30 +120,30 @@ const App = () => {
         'Neptune is the eighth and farthest known planet from the Sun in the Solar System. In the Solar System, it is the fourth-largest planet by diameter, the third-most-massive planet, and the densest giant planet. Neptune is 17 times the mass of Earth, slightly more massive than its near-twin Uranus. Neptune is denser and physically smaller than Uranus because its greater mass causes more gravitational compression of its atmosphere.'
     }
   ]
-
+  
   const [description, setDescription] = useState('Choose a planet to get its description.')
-  const [sort, setSort] = useState([])
-
+  const [currentPlanets, setCurrentPlanets] = useState(planets)
+  
   const showDescription = shortDescription => {
     setDescription(shortDescription)
   }
-
+  
   const handleSortBy = value => {
     const planetsForSort = [...planets]
-
+    
     switch (planetsForSort, value) {
       case 'size':
-        setSort(planetsForSort.sort( (a, b) => b.mass - a.mass ))
+        setCurrentPlanets(planetsForSort.sort( (a, b) => b.mass - a.mass ))
         console.log('size complete')
         break
 
       case 'distance':
-        setSort(planetsForSort.sort( (a, b) => b.distance_from_sun - a.distance_from_sun ))
+        setCurrentPlanets(planetsForSort.sort( (a, b) => b.distance_from_sun - a.distance_from_sun ))
         console.log("distance complete")
         break
 
       case 'satellites':
-        setSort(planetsForSort.sort( (a, b) => b.satellites  - a.satellites  ))
+        setCurrentPlanets(planetsForSort.sort( (a, b) => b.satellites  - a.satellites ))
         console.log("satellites complete")
         break
 
@@ -156,10 +156,10 @@ const App = () => {
     <>
       <div className="sort-planet">  
         <Search />
-        <SortPlanets handleSortBy={handleSortBy} value={sort} />
+        <SortPlanets handleSortBy={handleSortBy}  />
       </div>
 
-      <Planets planets={planets} showDescription={showDescription} />
+      <Planets planets={currentPlanets} showDescription={showDescription} />
       <ShortDescription value={description}/>
     </>
   )
